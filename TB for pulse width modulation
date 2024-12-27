@@ -1,0 +1,31 @@
+module PWM_generator_tb;
+    reg clk_tb;
+    reg reset_tb;
+    reg [2:0] duty_tb;
+    wire pwm_out_tb;
+    PWM_generator uut (
+        .clk(clk_tb),
+        .reset(reset_tb),
+        .duty(duty_tb),
+        .pwm_out(pwm_out_tb)
+    ); 
+    initial begin
+        clk_tb = 0;
+        forever #5 clk_tb = ~clk_tb;
+    end
+    initial begin
+        reset_tb = 1;
+        duty_tb = 3'b0;
+        #20;
+        reset_tb = 0;
+        duty_tb = 3'd2;  
+        #50;
+        duty_tb = 3'd1; 
+        #150;
+        duty_tb = 3'd3; 
+        #10;
+        duty_tb = 3'd2;
+        #100;
+        $stop;
+    end
+endmodule
